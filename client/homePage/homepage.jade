@@ -1,0 +1,14 @@
+template(name='homePage')
+    +ifEsInputIsEmpty index="bluePrints"
+        +homePromo
+
+
+    +ifEsIsSearching index="bluePrints"
+        div Loading...
+    else
+        .results-wrapper
+            +esEach index="bluePrints"
+                p {{title}}
+
+
+        +esLoadMoreButton index="bluePrints"

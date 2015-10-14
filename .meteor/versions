@@ -23,6 +23,7 @@ cloudspider:autoform-tags-typeahead@0.7.1
 coffeescript@1.0.10
 cosio55:autoform-cloudinary@0.0.2
 cosmos:browserify@0.5.1
+czbaker:lightbox2@2.7.1_1
 ddp@1.2.2
 ddp-client@1.2.1
 ddp-common@1.2.1

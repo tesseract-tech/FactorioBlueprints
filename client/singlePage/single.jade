@@ -4,7 +4,8 @@ template(name='single')
             h1 {{doc.title}}
         .row
             .col-lg-4
-                img(src=doc.image class='img-rounded')
+                a(href=doc.image data-lightbox='image')
+                    img(src=doc.image class='img-thumbnail')
                 hr
                 .panel.panel-default
                     .panel-heading Info
@@ -16,7 +17,7 @@ template(name='single')
                             tr
                                 td Release Date::
                                 td oct 43, 1022
-                            
+
 
             .col-lg-8
                 .panel.panel-default
@@ -30,5 +31,5 @@ template(name='single')
                 .panel.panel-default
                     .panel-heading BluePrint String
                         button(id='bluePrintBtn' class='btn btn-default' data-clipboard-text=doc.string) Copy To Clipboard
-                    .panel-body  {{doc.string}}
+                    .panel-body#string  {{doc.string}}
 

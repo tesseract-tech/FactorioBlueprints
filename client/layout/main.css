@@ -41,3 +41,7 @@ body > .container {
 code {
     font-size: 80%;
 }
+
+#string{
+    word-wrap: break-word;
+}

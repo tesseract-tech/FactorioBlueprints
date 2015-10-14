@@ -1,0 +1,11 @@
+template(name='listingEntry')
+    .col-lg-3
+        .thumbnail
+            img(src=image alt=title)
+            .caption
+                h3 {{title}}
+                p
+                    each tags
+                        span(class='badge') {{this}}
+                p(class='right-align')
+                    a(href=url class='btn btn-primary') View

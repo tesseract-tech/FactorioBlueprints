@@ -1,14 +1,20 @@
 Template.single.onCreated ()->
-  console.log FlowRouter.getParam('id')
   this.subscribe('singleEntry', FlowRouter.getParam('id'))
   this.subscribe('favorites')
 
 Template.single.helpers
   'doc': ()->
     bluePrints.findOne({_id: FlowRouter.getParam('id')})
+  'pubDate': ()->
+    dp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
+    moment(dp.pubDate).format('DD MMM, YYYY')
+  'user': ()->
+    bp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
+    Meteor.users.findOne({_id: bp.user})
 
 
 Template.single.onRendered ()->
+
   client = new ZeroClipboard(document.getElementById('bluePrintBtn'))
 
   client.on 'ready', (readyEvent)->

@@ -13,10 +13,12 @@ template(name='single')
                         tbody
                             tr
                                 td Author ::
-                                td some guy
+                                if Template.subscriptionsReady
+                                    td {{user.username}}
                             tr
                                 td Release Date::
-                                td oct 43, 1022
+                                if Template.subscriptionsReady
+                                    td {{pubDate}}
 
 
             .col-lg-8
@@ -31,5 +33,4 @@ template(name='single')
                 .panel.panel-default
                     .panel-heading BluePrint String
                         button(id='bluePrintBtn' class='btn btn-default' data-clipboard-text=doc.string) Copy To Clipboard
-                    .panel-body#string  {{doc.string}}
-
+                    .panel-body#string  {{{doc.string}}}

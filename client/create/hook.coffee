@@ -1,11 +1,9 @@
 hook =
   after:
-    insert:(error, result)->
-      console.log error
-      console.log result
+    insert: (error, result)->
 
-  onSuccess: ()->
-    console.log "yay"
+  onSuccess: (formType, result)->
+    FlowRouter.go('/view/' + result)
   onError: (formType, error)->
     console.log error
 

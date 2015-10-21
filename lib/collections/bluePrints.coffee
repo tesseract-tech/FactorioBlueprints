@@ -39,6 +39,6 @@
     autoValue: ()->
       Meteor.userId()
   pubDate:
-    type: Number
+    type: String
     autoValue: ()->
-      new Date().getTime()
+      moment().format()

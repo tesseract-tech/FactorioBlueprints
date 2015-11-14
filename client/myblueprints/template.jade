@@ -1,0 +1,9 @@
+template(name='myPrints')
+    .container
+        .page-header
+            h1 My Blueprints
+        .row
+            each prints
+                +listingEntry
+                if endOfRow
+                    .row

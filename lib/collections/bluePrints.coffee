@@ -4,6 +4,16 @@
   limit: 20
   use: 'mongo-db'
 
+
+
+  requirementsSchema = new SimpleSchema
+    amount:
+      type: Number
+      max: 1000
+      min: 1
+    item:
+      type: String
+
 @bluePrints.attachSchema new SimpleSchema
   title:
     type: String
@@ -34,6 +44,9 @@
     autoform:
       afFieldInput:
         type: 'raty'
+  requirements:
+    type: [requirementsSchema]
+    min: 1
   user:
     type: String
     autoValue: ()->

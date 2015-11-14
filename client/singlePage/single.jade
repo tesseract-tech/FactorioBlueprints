@@ -2,6 +2,13 @@ template(name='single')
     .container
         .page-header
             h1 {{doc.title}}
+            h6
+                if isFav
+                    button(id='removeFav' class="btn btn-default btn-sm")
+                        span(class="glyphicon glyphicon glyphicon-heart" aria-hidden="true")  Remove Favorite
+                else
+                    button(id='addFav' class="btn btn-default btn-sm")
+                        span(class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true")  Add Favorite
         .row
             .col-lg-4
                 a(href=doc.image data-lightbox='image')
@@ -20,13 +27,28 @@ template(name='single')
                                 if Template.subscriptionsReady
                                     td {{pubDate}}
 
-
-            .col-lg-8
                 .panel.panel-default
                     .panel-heading Tags
                     .panel-body
                         each doc.tags
                             span(class='badge') {{this}}
+                            | &nbsp;
+                .panel.panel-default
+                    .panel-heading Requirements
+                    table(class='table')
+                        tbody
+                            each doc.requirements
+                                tr
+                                    td {{this.amount}} X {{this.item}}
+
+
+            .col-lg-8
+                if Template.subscriptionsReady
+                    if canEdit
+                        .panel.panel-default
+                            .panel-heading Controls
+                            .panel-body
+                                a(class='btn' href=link) Edit
                 .panel.panel-default
                     .panel-heading Details
                     .panel-body {{{renderMarkdown doc.description}}}

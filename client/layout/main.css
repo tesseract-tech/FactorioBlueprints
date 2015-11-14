@@ -45,3 +45,8 @@ code {
 #string{
     word-wrap: break-word;
 }
+
+.entry{
+    min-height: 400px;
+    max-height: 400px;
+}

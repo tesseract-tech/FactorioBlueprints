@@ -1,4 +1,5 @@
 template(name='single')
+
     .container
         .page-header
             h1 {{doc.title}}
@@ -49,7 +50,8 @@ template(name='single')
                         .panel.panel-default
                             .panel-heading Controls
                             .panel-body
-                                a(class='btn' href=link) Edit
+                                a(class='btn btn-default' href=link) Edit
+                                +quickRemoveButton(collection="bluePrints" _id=doc._id onSuccess=onRemoveSuccess beforeRemove=beforeRemove class="btn btn-danger")
                 .panel.panel-default
                     .panel-heading Details
                     .panel-body {{{renderMarkdown doc.description}}}

@@ -1,0 +1,1 @@
+@bluePrints.permit('insert').ifLoggedIn().apply();

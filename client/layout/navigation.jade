@@ -1,0 +1,13 @@
+template(name='topNav')
+    nav.navbar.navbar-default.navbar-fixed-top
+        .container
+            .navbar-header
+                a.navbar-brand(href='/' id="logo") Factorio Blueprints
+            #navbar.navbar-collapse.collapse.navbar-right
+                form(class='navbar-form navbar-left' role='search' id='mainSearch')
+                    .form-group
+                        +esInput(index="bluePrints" id='bluePrintSearch' placeholder="Search..." timeout='500' class='form-control')
+                ul(class='nav navbar-nav')
+                    li
+                        a(href='/create') Create
+                    +loginButtons

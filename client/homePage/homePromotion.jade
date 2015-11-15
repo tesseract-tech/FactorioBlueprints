@@ -1,0 +1,12 @@
+template(name='homePromo')
+    // Hero
+    .jumbotron
+        .container
+            h1 Create your BluePrint
+            p Help us grow our blueprint database  by adding your creations
+            a(class='btn btn-primary btn-lrg' href='/create') Create BluePrint
+
+    .container
+        h4 Newly Added
+        each newest
+            +listingEntry

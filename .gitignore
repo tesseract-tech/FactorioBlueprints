@@ -1,2 +1,10 @@
 .meteor/local
 .meteor/meteorite
+
+.idea/
+.idea/jsLibraryMappings.xml
+.idea/watcherTasks.xml
+
+settings.json
+
+mup.json

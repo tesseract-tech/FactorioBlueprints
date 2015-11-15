@@ -1,0 +1,21 @@
+template(name='homePage')
+    +ifEsInputIsEmpty index="bluePrints" id='bluePrintSearch'
+        +homePromo
+
+
+    +ifEsIsSearching index="bluePrints" id='bluePrintSearch'
+        .container
+            .page-header
+                h1 Loading...
+    else
+        if totalResults
+            .container
+                .page-header
+                    h1 {{totalResults}} Results for '{{searchTerm}}'
+                +esEach index="bluePrints" id='bluePrintSearch'
+                    +listingEntry
+                +esLoadMoreButton index="bluePrints"
+        else if noResults
+            .container
+                .page-header
+                    h1 Sorry No Results for '{{searchTerm}}'

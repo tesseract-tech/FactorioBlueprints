@@ -5,7 +5,12 @@ Session.setDefault('totalResults', 0)
 
 Template.homePromo.helpers
   'newest': ()->
-    bluePrints.find({}, {$sort: {pubDate: 1}, limit: 4})
+    bluePrints.find(
+      {},
+      limit: 4,
+      sort:
+        pubDate: -1
+    )
 
 
 Template.homePage.onCreated ()->

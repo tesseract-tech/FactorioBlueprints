@@ -55,3 +55,6 @@
     type: String
     autoValue: ()->
       moment().format()
+  favCount:
+    type: Number
+    optional: true

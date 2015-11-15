@@ -2,13 +2,14 @@ template(name='single')
     .container
         .page-header
             h1 {{doc.title}}
-            h6
-                if isFav
-                    button(id='removeFav' class="btn btn-default btn-sm")
-                        span(class="glyphicon glyphicon glyphicon-heart" aria-hidden="true")  Remove Favorite
-                else
-                    button(id='addFav' class="btn btn-default btn-sm")
-                        span(class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true")  Add Favorite
+            if Template.subscriptionsReady
+                h6
+                    if isFav
+                        button(id='removeFav' class="btn btn-default btn-sm")
+                            span(class="glyphicon glyphicon glyphicon-heart" aria-hidden="true")  Remove Favorite
+                    else
+                        button(id='addFav' class="btn btn-default btn-sm")
+                            span(class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true")  Add Favorite
         .row
             .col-lg-4
                 a(href=doc.image data-lightbox='image')

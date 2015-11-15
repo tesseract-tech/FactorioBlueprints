@@ -1,4 +1,5 @@
 Template.layout.onCreated ()->
+  document.title = 'Factorio BluePrints'
   self = @
   self.autorun ()->
     if Meteor.user()

@@ -4,7 +4,9 @@ template(name='homePage')
 
 
     +ifEsIsSearching index="bluePrints" id='bluePrintSearch'
-        div Loading...
+        .container
+            .page-header
+                h1 Loading...
     else
         if totalResults
             .container

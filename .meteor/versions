@@ -25,6 +25,7 @@ comerc:autoform-typeahead@1.0.2
 cosio55:autoform-cloudinary@0.0.2
 cosmos:browserify@0.5.1
 czbaker:lightbox2@2.7.1_1
+datariot:ganalytics@0.2.1
 dburles:mongo-collection-instances@0.3.4
 ddp@1.2.2
 ddp-client@1.2.1
@@ -63,6 +64,8 @@ meteor-base@1.0.1
 meteor-platform@1.2.3
 meteorhacks:aggregate@1.2.1
 meteorhacks:collection-utils@1.2.0
+meteorhacks:kadira@2.26.3
+meteorhacks:meteorx@1.4.1
 meteortoys:toykit@2.2.1
 minifiers@1.1.7
 minimongo@1.0.10

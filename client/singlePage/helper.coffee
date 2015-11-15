@@ -5,6 +5,8 @@ Template.single.onCreated ()->
 Template.single.helpers
   'doc': ()->
     bluePrints.findOne({_id: FlowRouter.getParam('id')})
+
+
   'pubDate': ()->
     dp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
     moment(dp.pubDate).format('DD MMM, YYYY')
@@ -19,6 +21,15 @@ Template.single.helpers
   'isFav': ()->
     userData = Meteor.users.findOne({_id: Meteor.userId()})
     _.contains userData.favs, FlowRouter.getParam('id')
+  'beforeRemove': ()->
+    return (collection, id)->
+      doc = collection.findOne(id)
+      if confirm "Really delete ?"
+        FlowRouter.go('/user/blueprints')
+        this.remove()
+        bluePrints.remove({_id: id})
+        sAlert.success("Blueprint Removed.")
+
 
 
 Template.single.events

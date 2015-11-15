@@ -25,9 +25,13 @@ template(name='single')
                                 if Template.subscriptionsReady
                                     td {{user.username}}
                             tr
-                                td Release Date::
+                                td Release Date ::
                                 if Template.subscriptionsReady
                                     td {{pubDate}}
+                            tr
+                                td Last Updated ::
+                                if Template.subscriptionsReady
+                                    td {{lastUpdated}}
 
                 .panel.panel-default
                     .panel-heading Tags

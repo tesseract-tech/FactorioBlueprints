@@ -53,8 +53,10 @@
       Meteor.userId()
   pubDate:
     type: String
-    autoValue: ()->
-      moment().format()
+    optional: true
+  lastUpdate:
+    type: String
+    optional: true
   favCount:
     type: Number
     optional: true

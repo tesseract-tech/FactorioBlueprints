@@ -17,7 +17,7 @@ FlowRouter.route '/create',
         redirect('/login')
   ]
   action: ()->
-    BlazeLayout.render 'layout', {content: 'createBluePrint'}
+    BlazeLayout.render 'layout', {content: 'bluePrintForm'}
 
 
 FlowRouter.route '/view/:id',
@@ -26,8 +26,18 @@ FlowRouter.route '/view/:id',
     BlazeLayout.render 'layout', {content: 'single'}
 
 FlowRouter.route '/edit/:id',
+
+  triggersEnter: [
+    (context, redirect)->
+      unless Meteor.loggingIn() or Meteor.userId()
+        route = FlowRouter.current()
+        unless route.route.name is '/login'
+          Session.set 'redirectAfterLogin', route.path
+        redirect('/login')
+  ]
+
   action: (params)->
-    BlazeLayout.render 'layout', {content: 'editBluePrint'}
+    BlazeLayout.render 'layout', {content: 'bluePrintForm'}
 
 FlowRouter.route '/user/bluePrints',
   action: ()->

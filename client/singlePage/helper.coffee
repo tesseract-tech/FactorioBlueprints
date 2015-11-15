@@ -10,6 +10,9 @@ Template.single.helpers
   'pubDate': ()->
     dp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
     moment(dp.pubDate).format('DD MMM, YYYY')
+  'lastUpdated': ()->
+    dp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
+    moment(dp.lastUpdated).format('DD MMM, YYYY')
   'user': ()->
     bp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
     Meteor.users.findOne({_id: bp.user})

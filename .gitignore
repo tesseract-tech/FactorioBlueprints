@@ -6,5 +6,5 @@
 .idea/watcherTasks.xml
 
 settings.json
-
 mup.json
+packages/**

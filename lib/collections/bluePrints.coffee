@@ -9,7 +9,7 @@
   requirementsSchema = new SimpleSchema
     amount:
       type: Number
-      max: 1000
+      max: 100000000
       min: 1
     item:
       type: String
@@ -46,15 +46,17 @@
         type: 'raty'
   requirements:
     type: [requirementsSchema]
-    min: 1
+    optional: true
   user:
     type: String
     autoValue: ()->
       Meteor.userId()
   pubDate:
     type: String
-    autoValue: ()->
-      moment().format()
+    optional: true
+  lastUpdate:
+    type: String
+    optional: true
   favCount:
     type: Number
     optional: true

@@ -5,11 +5,12 @@ Template.single.onCreated ()->
 Template.single.helpers
   'doc': ()->
     bluePrints.findOne({_id: FlowRouter.getParam('id')})
-
-
   'pubDate': ()->
     dp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
     moment(dp.pubDate).format('DD MMM, YYYY')
+  'lastUpdated': ()->
+    dp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
+    moment(dp.lastUpdated).format('DD MMM, YYYY')
   'user': ()->
     bp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
     Meteor.users.findOne({_id: bp.user})
@@ -21,6 +22,17 @@ Template.single.helpers
   'isFav': ()->
     userData = Meteor.users.findOne({_id: Meteor.userId()})
     _.contains userData.favs, FlowRouter.getParam('id')
+  thumbImg: ()->
+    bp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
+
+    if not bp
+      return ''
+    else
+      image = bp.image
+
+    newUrl = image.split('upload/')
+    newUrl.join('upload/c_fill,g_center,h_260,r_0,w_460/')
+
   'beforeRemove': ()->
     return (collection, id)->
       doc = collection.findOne(id)
@@ -31,8 +43,13 @@ Template.single.helpers
         sAlert.success("Blueprint Removed.")
 
 
-
 Template.single.events
+  'click .img-thumbnail': (e)->
+    imgSrc = $(e.currentTarget).data('full')
+    if imgSrc
+      sImageBox.open(imgSrc)
+
+
   'click #addFav': ()->
     userId = Meteor.userId()
     entryId = FlowRouter.getParam('id')

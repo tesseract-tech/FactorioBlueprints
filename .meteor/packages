@@ -44,8 +44,16 @@ comerc:autoform-typeahead
 msavin:mongol
 
 
-npm-container
 underscore
 meteorhacks:kadira
 datariot:ganalytics
 aldeed:delete-button
+juliancwirko:s-image-box
+jparker:crypto-base64
+meteorhacks:npm
+
+
+npm-container
+gb96:zlib
+ostrio:base64
+cosmos:browserify

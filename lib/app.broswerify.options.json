@@ -1,0 +1,12 @@
+//
+//
+//{
+//  "transforms": {
+//    "externalify": {
+//      "global": true,
+//      "external": {
+//        "pako": "pako.require"
+//      }
+//    }
+//  }
+//}

@@ -11,10 +11,10 @@ template(name='single')
                     else
                         button(id='addFav' class="btn btn-default btn-sm")
                             span(class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true")  Add Favorite
+
         .row
             .col-lg-4
-                a(href=doc.image data-lightbox='image')
-                    img(src=doc.image class='img-thumbnail')
+                img(src=thumbImg  data-full=doc.image class='img-thumbnail')
                 hr
                 .panel.panel-default
                     .panel-heading Info
@@ -25,9 +25,14 @@ template(name='single')
                                 if Template.subscriptionsReady
                                     td {{user.username}}
                             tr
-                                td Release Date::
+                                td Release Date ::
                                 if Template.subscriptionsReady
                                     td {{pubDate}}
+                            tr
+                                td Last Updated ::
+                                if Template.subscriptionsReady
+                                    td {{lastUpdated}}
+
 
                 .panel.panel-default
                     .panel-heading Tags
@@ -35,6 +40,9 @@ template(name='single')
                         each doc.tags
                             span(class='badge') {{this}}
                             | &nbsp;
+
+
+
                 .panel.panel-default
                     .panel-heading Requirements
                     table(class='table')
@@ -57,5 +65,6 @@ template(name='single')
                     .panel-body {{{renderMarkdown doc.description}}}
                 .panel.panel-default
                     .panel-heading BluePrint String
-                        button(id='bluePrintBtn' class='btn btn-default' data-clipboard-text=doc.string) Copy To Clipboard
-                    .panel-body#string  {{{doc.string}}}
+                        button(id='bluePrintBtn' class='btn btn-primary' data-clipboard-text=doc.string) Copy To Clipboard
+                        button(id='viewString' class='btn btn-default' data-toggle='collapse' data-target='#string') View Blueprint String
+                    .panel-body(id='string' class='collapse')  {{{doc.string}}}

@@ -1,3 +1,5 @@
 {
-  "path-to-regexp": "1.2.1"
+  "pako": "0.2.8",
+  "externalify": "0.1.0",
+  "luaparse": "0.2.0"
 }

@@ -33,12 +33,16 @@ template(name='single')
                                 if Template.subscriptionsReady
                                     td {{lastUpdated}}
 
+
                 .panel.panel-default
                     .panel-heading Tags
                     .panel-body
                         each doc.tags
                             span(class='badge') {{this}}
                             | &nbsp;
+
+
+
                 .panel.panel-default
                     .panel-heading Requirements
                     table(class='table')
@@ -61,5 +65,6 @@ template(name='single')
                     .panel-body {{{renderMarkdown doc.description}}}
                 .panel.panel-default
                     .panel-heading BluePrint String
-                        button(id='bluePrintBtn' class='btn btn-default' data-clipboard-text=doc.string) Copy To Clipboard
-                    .panel-body#string  {{{doc.string}}}
+                        button(id='bluePrintBtn' class='btn btn-primary' data-clipboard-text=doc.string) Copy To Clipboard
+                        button(id='viewString' class='btn btn-default' data-toggle='collapse' data-target='#string') View Blueprint String
+                    .panel-body(id='string' class='collapse')  {{{doc.string}}}

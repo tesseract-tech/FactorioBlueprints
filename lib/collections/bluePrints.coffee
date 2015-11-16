@@ -9,7 +9,7 @@
   requirementsSchema = new SimpleSchema
     amount:
       type: Number
-      max: 1000
+      max: 100000000
       min: 1
     item:
       type: String
@@ -46,7 +46,7 @@
         type: 'raty'
   requirements:
     type: [requirementsSchema]
-    min: 1
+    optional: true
   user:
     type: String
     autoValue: ()->

@@ -24,7 +24,11 @@ Template.single.helpers
     _.contains userData.favs, FlowRouter.getParam('id')
   thumbImg: ()->
     bp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
-    image = bp.image
+
+    if not bp
+      return ''
+    else
+      image = bp.image
 
     newUrl = image.split('upload/')
     newUrl.join('upload/c_fill,g_center,h_260,r_0,w_460/')

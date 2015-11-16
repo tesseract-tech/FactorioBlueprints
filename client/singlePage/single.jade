@@ -11,55 +11,55 @@ template(name='single')
                     else
                         button(id='addFav' class="btn btn-default btn-sm")
                             span(class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true")  Add Favorite
-        if Template.subscriptionsReady
-            .row
-                .col-lg-4
-                    img(src=thumbImg  data-full=doc.image class='img-thumbnail')
-                    hr
-                    .panel.panel-default
-                        .panel-heading Info
-                        table(class='table')
-                            tbody
-                                tr
-                                    td Author ::
-                                    if Template.subscriptionsReady
-                                        td {{user.username}}
-                                tr
-                                    td Release Date ::
-                                    if Template.subscriptionsReady
-                                        td {{pubDate}}
-                                tr
-                                    td Last Updated ::
-                                    if Template.subscriptionsReady
-                                        td {{lastUpdated}}
 
-                    .panel.panel-default
-                        .panel-heading Tags
-                        .panel-body
-                            each doc.tags
-                                span(class='badge') {{this}}
-                                | &nbsp;
-                    .panel.panel-default
-                        .panel-heading Requirements
-                        table(class='table')
-                            tbody
-                                each doc.requirements
-                                    tr
-                                        td {{this.amount}} X {{this.item}}
+        .row
+            .col-lg-4
+                img(src=thumbImg  data-full=doc.image class='img-thumbnail')
+                hr
+                .panel.panel-default
+                    .panel-heading Info
+                    table(class='table')
+                        tbody
+                            tr
+                                td Author ::
+                                if Template.subscriptionsReady
+                                    td {{user.username}}
+                            tr
+                                td Release Date ::
+                                if Template.subscriptionsReady
+                                    td {{pubDate}}
+                            tr
+                                td Last Updated ::
+                                if Template.subscriptionsReady
+                                    td {{lastUpdated}}
+
+                .panel.panel-default
+                    .panel-heading Tags
+                    .panel-body
+                        each doc.tags
+                            span(class='badge') {{this}}
+                            | &nbsp;
+                .panel.panel-default
+                    .panel-heading Requirements
+                    table(class='table')
+                        tbody
+                            each doc.requirements
+                                tr
+                                    td {{this.amount}} X {{this.item}}
 
 
-                .col-lg-8
-                    if Template.subscriptionsReady
-                        if canEdit
-                            .panel.panel-default
-                                .panel-heading Controls
-                                .panel-body
-                                    a(class='btn btn-default' href=link) Edit
-                                    +quickRemoveButton(collection="bluePrints" _id=doc._id onSuccess=onRemoveSuccess beforeRemove=beforeRemove class="btn btn-danger")
-                    .panel.panel-default
-                        .panel-heading Details
-                        .panel-body {{{renderMarkdown doc.description}}}
-                    .panel.panel-default
-                        .panel-heading BluePrint String
-                            button(id='bluePrintBtn' class='btn btn-default' data-clipboard-text=doc.string) Copy To Clipboard
-                        .panel-body#string  {{{doc.string}}}
+            .col-lg-8
+                if Template.subscriptionsReady
+                    if canEdit
+                        .panel.panel-default
+                            .panel-heading Controls
+                            .panel-body
+                                a(class='btn btn-default' href=link) Edit
+                                +quickRemoveButton(collection="bluePrints" _id=doc._id onSuccess=onRemoveSuccess beforeRemove=beforeRemove class="btn btn-danger")
+                .panel.panel-default
+                    .panel-heading Details
+                    .panel-body {{{renderMarkdown doc.description}}}
+                .panel.panel-default
+                    .panel-heading BluePrint String
+                        button(id='bluePrintBtn' class='btn btn-default' data-clipboard-text=doc.string) Copy To Clipboard
+                    .panel-body#string  {{{doc.string}}}

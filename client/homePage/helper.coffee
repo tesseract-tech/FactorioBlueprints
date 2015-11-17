@@ -1,5 +1,6 @@
 Template.homePromo.onCreated ()->
   this.subscribe('newest')
+  this.subscribe('mostFav')
 
 Session.setDefault('totalResults', 0)
 
@@ -11,6 +12,14 @@ Template.homePromo.helpers
       sort:
         pubDate: -1
     )
+  'mostFav': ()->
+    bluePrints.find(
+      {},
+      limit: 4,
+      sort:
+        favCount: -1
+    )
+
   'loggedIn': ()->
     console.log 'fire'
     if Meteor.userId()

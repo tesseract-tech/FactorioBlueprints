@@ -16,6 +16,17 @@ Meteor.publish 'newest', ()->
       pubDate: -1
   )
 
+#  Gets most faved blue prints
+Meteor.publish 'mostFav', ()->
+  bluePrints.find(
+    {},
+    limit: 4,
+    sort:
+      favCount: -1
+  )
+
+
+
 
 #  gets all entries for specific user
 Meteor.publish 'byUserId', (userId)->

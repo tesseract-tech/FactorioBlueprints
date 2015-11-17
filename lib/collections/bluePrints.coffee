@@ -49,8 +49,7 @@
     optional: true
   user:
     type: String
-    autoValue: ()->
-      Meteor.userId()
+    optional: false
   pubDate:
     type: String
     optional: true
@@ -59,4 +58,7 @@
     optional: true
   favCount:
     type: Number
+    optional: true
+  parsed:
+    type: String
     optional: true

@@ -1,5 +1,6 @@
 {
   "pako": "0.2.8",
   "externalify": "0.1.0",
-  "luaparse": "0.2.0"
+  "luaparse": "0.2.0",
+  "shelljs": "0.5.3"
 }

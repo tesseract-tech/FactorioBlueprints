@@ -50,3 +50,5 @@ code {
     min-height: 400px;
     max-height: 400px;
 }
+
+#string{ word-wrap:break-word; word-break:break-all }

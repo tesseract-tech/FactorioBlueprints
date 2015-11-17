@@ -1,6 +1,10 @@
 template(name='layout')
     +topNav
     +sAlert
+    .container
+        .col-lg-12
+            .bg-info
+                h5(style="padding:20px;") If you created a blue print please re-save them to fix the issue with the requirements not being generated.
     +Template.dynamic template=content data=params
 
 

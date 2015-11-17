@@ -4,7 +4,10 @@ template(name='homePromo')
         .container
             h1 Create your BluePrint
             p Help us grow our blueprint database  by adding your creations
-            a(class='btn btn-primary btn-lrg' href='/create') Create BluePrint
+            if loggedIn
+                a(class='btn btn-primary btn-lrg' href='/create') Create BluePrint
+            else
+                button( id='showSignUp' class='btn btn-primary btn-lrg') Create Account
 
     .container
         h4 Newly Added

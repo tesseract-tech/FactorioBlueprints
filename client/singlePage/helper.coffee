@@ -1,6 +1,14 @@
+hasFlash = false
+try
+  hasFlash = Boolean(new ActiveXObject('ShockwaveFlash.ShockwaveFlash'))
+catch exception
+  hasFlash = 'undefined' != typeof navigator.mimeTypes['application/x-shockwave-flash']
+
+
 Template.single.onCreated ()->
   this.subscribe('singleEntry', FlowRouter.getParam('id'))
   this.subscribe('favorites')
+
 
 Template.single.helpers
   'doc': ()->
@@ -22,6 +30,8 @@ Template.single.helpers
   'isFav': ()->
     userData = Meteor.users.findOne({_id: Meteor.userId()})
     _.contains userData.favs, FlowRouter.getParam('id')
+  'hasFlash': ()->
+    hasFlash
   thumbImg: ()->
     bp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
 
@@ -63,11 +73,12 @@ Template.single.events
     Meteor.call('removeFav', userId, entryId)
 
 
-Template.single.onRendered ()->
-  client = new ZeroClipboard(document.getElementById('bluePrintBtn'))
+Template.single.onRendered ()=>
+  if hasFlash
+    client = new ZeroClipboard(document.getElementById('bluePrintBtn'))
 
-  client.on 'ready', (readyEvent)->
-    client.on 'aftercopy', (event)->
-      sAlert.success('Copied')
-      event.target.classList.add('btn-success')
-      event.target.innerHTML = 'Copied to Clipboard'
+    client.on 'ready', (readyEvent)->
+      client.on 'aftercopy', (event)->
+        sAlert.success('Copied')
+        event.target.classList.add('btn-success')
+        event.target.innerHTML = 'Copied to Clipboard'

@@ -57,3 +57,4 @@ npm-container
 gb96:zlib
 ostrio:base64
 cosmos:browserify
+meteorhacks:async

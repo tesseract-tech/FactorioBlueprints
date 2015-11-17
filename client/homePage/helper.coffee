@@ -29,4 +29,8 @@ Template.homePage.helpers
   'searchTerm': ()->
     Session.get('searchTerm')
   'noResults': ()->
-    if Session.get('totalResults') == 0  && Session.get('searchTerm').length > 0 then true else false
+    if Session.get('totalResults') == 0 && Session.get('searchTerm').length > 0 then true else false
+
+Template.homePage.events
+  'click #showSignUp': ()->
+    $('.dropdown-menu').show();

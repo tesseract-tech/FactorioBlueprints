@@ -1,10 +1,16 @@
+Meteor.startup ()->
+  if process.env.NODE_ENV == 'production'
+    @parserLoc = '/home/parser'
+  else
+    @parserLoc = '../../../../../private'
+
+
 EntCount = (string, id, callback)=>
   Meteor.npmRequire('shelljs/global')
-
   string = "'#{string}'"
-  console.log string.length
-  exec 'cd ../../../../../private && lua parser.lua ' + string, (code, output)->
-    #    console.log output
+
+  cmd = "cd #{@parserLoc} && lua parser.lua  #{string}"
+  exec cmd, (code, output)->
     if code != 0
       Meteor.Error "Something is wrong with the blueprint string"
     try
@@ -18,8 +24,6 @@ EntCount = (string, id, callback)=>
         entStorage[ent.name] = 1
       else
         entStorage[ent.name] = entStorage[ent.name] + 1
-
-    entStorage
 
     counts = []
 
@@ -38,7 +42,6 @@ wrappedEntCount = Async.wrap(EntCount)
 Meteor.methods
   'bluePrintParser': (string, bluePrintId)->
     counts = wrappedEntCount(string, bluePrintId)
-    console.log typeof JSON.stringify counts[1]
     bluePrints.update(bluePrintId, {
       $set:
         requirements: counts[0]

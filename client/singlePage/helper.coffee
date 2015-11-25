@@ -29,7 +29,11 @@ Template.single.helpers
     '/edit/' + FlowRouter.getParam('id')
   'isFav': ()->
     userData = Meteor.users.findOne({_id: Meteor.userId()})
-    _.contains userData.favs, FlowRouter.getParam('id')
+    if not Meteor.user()
+      return false
+    else
+      _.contains userData.favs, FlowRouter.getParam('id')
+
   'hasFlash': ()->
     hasFlash
   thumbImg: ()->
@@ -61,6 +65,13 @@ Template.single.events
 
 
   'click #addFav': ()->
+
+    if not Meteor.user()
+      sAlert.error('You must be logged in to do that')
+      Session.set('redirectAfterLogin', FlowRouter.current().path)
+      Template._loginButtons.toggleDropdown()
+      return false
+
     userId = Meteor.userId()
     entryId = FlowRouter.getParam('id')
 

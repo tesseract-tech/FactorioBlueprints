@@ -25,7 +25,7 @@
       type: 'markdown'
   tags:
     type: [String]
-    label: "Tags"
+    label: "Tags (press Enter after each tag to add it)"
     autoform:
       type: 'tagsTypeahead'
   image:

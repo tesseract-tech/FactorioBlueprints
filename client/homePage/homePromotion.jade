@@ -1,18 +1,19 @@
 template(name='homePromo')
-    // Hero
-    .jumbotron
+    if Template.subscriptionsReady
+        // Hero
         .container
-            h1 Create your BluePrint
-            p Help us grow our blueprint database  by adding your creations
-            if loggedIn
-                a(class='btn btn-primary btn-lrg' href='/create') Create BluePrint
-            else
-                button( id='showSignUp' class='btn btn-primary btn-lrg') Create Account
+            .jumbotron
+                h1 Create your BluePrint
+                p Help us grow our blueprint database  by adding your creations
+                if loggedIn
+                    a(class='btn btn-primary btn-lrg' href='/create') Create BluePrint
+                else
+                    button( id='showSignUpDropDown' class='btn btn-primary btn-lrg') Create Account
 
-    .container
-        h4 Newly Added
-        each newest
-            +listingEntry
-        h4 Most Favorited
-        each mostFav
-            +listingEntry
+        .container
+            h4 Newly Added
+            each newest
+                +listingEntry
+            h4 Most Favorited
+            each mostFav
+                +listingEntry

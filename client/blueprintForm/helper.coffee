@@ -33,13 +33,18 @@ parseBluePrint = (string)->
     pako.ungzip(data)
   catch err
     sAlert.error 'There is something wrong with your blueprint'
-    document.getElementbyId('button').diabled = false
+#    document.getElementbyId('button').diabled = false
 
 
 hook =
   before:
     'update': (doc)->
       string = doc.$set.string.trim()
+      if doc.$set.string?
+        string = doc.$set.string.trim()
+      else
+        sAlert.error('A blueprint string is required.')
+        return false;
       doc.$set.string = string
       doc.$set.lastUpdate = moment().format()
       try
@@ -51,7 +56,11 @@ hook =
 
       doc
     'insert': (doc)->
-      string = doc.string.trim()
+      if doc.string?
+        string = doc.string.trim()
+      else
+        sAlert.error('A blueprint string is required.')
+        return false;
 
       doc.string = string
       doc.pubDate = moment().format()

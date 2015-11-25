@@ -48,5 +48,6 @@ Template.homePage.helpers
 
 
 Template.homePage.events
-  'click #showSignUp': ()->
-    $('.dropdown-menu').show();
+  'click #showSignUpDropDown': ()=>
+#    $('.dropdown-toggle').dropdown('toggle')
+    Meteor.call 'showLogin'

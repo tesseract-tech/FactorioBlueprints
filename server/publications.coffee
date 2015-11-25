@@ -26,8 +26,6 @@ Meteor.publish 'mostFav', ()->
   )
 
 
-
-
 #  gets all entries for specific user
 Meteor.publish 'byUserId', (userId)->
   blueprints = bluePrints.find({user: userId})
@@ -44,3 +42,19 @@ Meteor.publish 'userFavs', (favs)->
   bluePrints.find(_id:
     $in: favs)
 
+# publish  all blueprints
+Meteor.publish 'allPrints', (page, limit)->
+  Counts.publish this, 'total_posts', bluePrints.find()
+
+  pageLimit = limit
+
+  if page <= 1
+    skip = 0
+  else
+    skip = (page - 1) * pageLimit
+
+  options = {}
+  options.skip = skip
+  options.limit = pageLimit
+
+  bluePrints.find {}, options

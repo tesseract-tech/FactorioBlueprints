@@ -3,4 +3,22 @@ template(name='bluePrintForm')
         .page-header
             h1 Create a Blueprint
 
-        +quickForm collection="bluePrints" id="bluePrintForm" type=formType omitFields='rating,user,pubDate,favCount,lastUpdate,requirements,parsed' doc=doc
+        +autoForm collection="bluePrints" id="bluePrintForm" type=formType doc=doc
+            .row
+                .col-lg-6
+                    +afQuickField(name='title')
+                .col-lg-6
+                    label(for="tags") Tags
+                        small (Press 'Enter' after each tag to add it)
+                    +afFieldInput(name='tags')
+            .row
+                .col-lg-6
+                    +afQuickField(name='image')
+                .col-lg-6
+                    +afQuickField(name='string')
+            .row
+                .col-lg-12
+                    +afQuickField(name='description')
+            .row
+                .col-lg-1.col-lg-offset-11
+                    button(type='submit' class='btn btn-primary') Submit

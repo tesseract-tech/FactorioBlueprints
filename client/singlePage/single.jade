@@ -32,6 +32,13 @@ template(name='single')
                                 td Last Updated ::
                                 if Template.subscriptionsReady
                                     td {{lastUpdated}}
+                            tr
+                                td Your Rating ::
+                                    br
+                                    strong {{myScore}}
+                                td  Average
+                                    br
+                                    +starsRating(rating=rating size='lg' mutable=true id='starRating')
 
 
                 .panel.panel-default
@@ -65,6 +72,7 @@ template(name='single')
                     .panel-body {{{renderMarkdown doc.description}}}
                 .panel.panel-default
                     .panel-heading BluePrint String
-                        button(id='bluePrintBtn' class='btn btn-primary' data-clipboard-text=doc.string) Copy To Clipboard
+                        if hasFlash
+                            button(id='bluePrintBtn' class='btn btn-primary' data-clipboard-text=doc.string) Copy To Clipboard
                         button(id='viewString' class='btn btn-default' data-toggle='collapse' data-target='#string') View Blueprint String
                     .panel-body(id='string' class='collapse')  {{{doc.string}}}

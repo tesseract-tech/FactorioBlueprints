@@ -1,0 +1,21 @@
+template(name='bluePrints')
+    .container
+        .page-header
+            h1 Blueprints
+            p(class='bg-info' style='padding: 15px') More options for sorting and count per page are coming.
+        .row
+            .content
+                if noPrints
+                    p Sorry no Blueprints found
+                else
+                    each prints
+                        +listingEntry
+
+                    nav
+                        ul(class='pager')
+                            if showPrev
+                                li(class='previous')
+                                    a(href='#' id='prevPage') Previous
+                            if showNext
+                                li(class='next')
+                                    a(href="#" id='nextPage') Next

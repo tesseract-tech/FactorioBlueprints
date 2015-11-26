@@ -1,11 +1,15 @@
 template(name='listingEntry')
     .col-lg-3.entry
         .thumbnail
-            img(src=image alt=title)
+            a(href=url)
+                img(src=image alt=title)
             .caption
-                h3 {{title}}
+                h3.truncate {{title}}
                 p
                     each tags
                         span(class='badge') {{this}}
+                p
+                    span(class='glyphicon  glyphicon-heart')
+                        strong  {{favCount}}
                 p(class='right-align')
                     a(href=url class='btn btn-primary') View

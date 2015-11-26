@@ -1,7 +1,10 @@
+# set page limit
+@pageLimit = 8
+
 Meteor.startup ()->
   sAlert.config
     effect: 'jelly'
-    position: 'bottom-right'
+    position: 'bottom'
     stack: true
     beep: true
 

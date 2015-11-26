@@ -1,5 +1,6 @@
 Template.homePromo.onCreated ()->
   this.subscribe('newest')
+  this.subscribe('mostFav')
 
 Session.setDefault('totalResults', 0)
 
@@ -11,6 +12,20 @@ Template.homePromo.helpers
       sort:
         pubDate: -1
     )
+  'mostFav': ()->
+    bluePrints.find(
+      {},
+      limit: 4,
+      sort:
+        favCount: -1
+    )
+
+  'loggedIn': ()->
+    console.log 'fire'
+    if Meteor.userId()
+      true
+    else
+      false
 
 
 Template.homePage.onCreated ()->
@@ -29,4 +44,10 @@ Template.homePage.helpers
   'searchTerm': ()->
     Session.get('searchTerm')
   'noResults': ()->
-    if Session.get('totalResults') == 0  && Session.get('searchTerm').length > 0 then true else false
+    if Session.get('totalResults') == 0 && Session.get('searchTerm').length > 0 then true else false
+
+
+Template.homePage.events
+  'click #showSignUpDropDown': ()=>
+#    $('.dropdown-toggle').dropdown('toggle')
+    Meteor.call 'showLogin'

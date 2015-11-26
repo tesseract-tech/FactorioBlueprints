@@ -42,11 +42,24 @@ code {
     font-size: 80%;
 }
 
-#string{
+#string {
     word-wrap: break-word;
 }
 
-.entry{
-    min-height: 400px;
-    max-height: 400px;
+#string {
+    word-wrap: break-word;
+    word-break: break-all
+}
+
+/*fix for thunbnails having large titles*/
+.truncate {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/*Fix for tags input being very short*/
+.bootstrap-tagsinput input {
+    min-width: 150px !important;
 }

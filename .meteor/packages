@@ -28,7 +28,6 @@ aldeed:collection2
 cloudspider:autoform-tags-typeahead
 q42:autoform-markdown
 cosio55:autoform-cloudinary
-andrei:autoform-raty
 ian:accounts-ui-bootstrap-3
 check
 ongoworks:security
@@ -57,3 +56,6 @@ npm-container
 gb96:zlib
 ostrio:base64
 cosmos:browserify
+meteorhacks:async
+tmeasday:publish-counts
+barbatus:stars-rating

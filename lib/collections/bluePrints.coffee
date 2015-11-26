@@ -25,7 +25,7 @@
       type: 'markdown'
   tags:
     type: [String]
-    label: "Tags"
+    label: "Tags (press Enter after each tag to add it)"
     autoform:
       type: 'tagsTypeahead'
   image:
@@ -38,19 +38,12 @@
     label: "Blueprint String"
     autoform:
       rows: 3
-  rating:
-    type: String
-    optional: true
-    autoform:
-      afFieldInput:
-        type: 'raty'
   requirements:
     type: [requirementsSchema]
     optional: true
   user:
     type: String
-    autoValue: ()->
-      Meteor.userId()
+    optional: false
   pubDate:
     type: String
     optional: true
@@ -59,4 +52,7 @@
     optional: true
   favCount:
     type: Number
+    optional: true
+  parsed:
+    type: String
     optional: true

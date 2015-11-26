@@ -4,7 +4,7 @@ Template.bluePrints.onCreated ()->
     page = FlowRouter.getQueryParam('page')
     if  not Number(page)
       page = 0
-    Meteor.subscribe('allPrints', page, 4)
+    Meteor.subscribe('allPrints', page, 8)
 
 #FlowRouter.setQueryParams({page: 0})
 

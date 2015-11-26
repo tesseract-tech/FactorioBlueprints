@@ -32,6 +32,13 @@ template(name='single')
                                 td Last Updated ::
                                 if Template.subscriptionsReady
                                     td {{lastUpdated}}
+                            tr
+                                td Your Rating ::
+                                    br
+                                    strong {{myScore}}
+                                td  Average
+                                    br
+                                    +starsRating(rating=rating size='lg' mutable=true id='starRating')
 
 
                 .panel.panel-default

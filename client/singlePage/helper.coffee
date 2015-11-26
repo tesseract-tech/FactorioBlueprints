@@ -6,8 +6,11 @@ catch exception
 
 
 Template.single.onCreated ()->
-  this.subscribe('singleEntry', FlowRouter.getParam('id'))
-  this.subscribe('favorites')
+  self = @
+  self.autorun ()->
+    self.subscribe('singleEntry', FlowRouter.getParam('id'))
+    self.subscribe('entryRating', FlowRouter.getParam('id'))
+    self.subscribe('favorites')
 
 
 Template.single.helpers
@@ -56,32 +59,67 @@ Template.single.helpers
         bluePrints.remove({_id: id})
         sAlert.success("Blueprint Removed.")
 
+  'rating': ()->
+    entryId = FlowRouter.getParam('id')
+    entries = rankings.find({entryId: entryId}).fetch()[0]
+
+    if !entries?
+      return 0
+
+    totalVotes = entries.votes.length
+    totalScore = 0
+    _.each entries.votes, (vote)->
+      totalScore += vote.score
+    #return average
+    totalScore / totalVotes
+
+  'myScore': ()->
+    if !Meteor.user()
+      return 0
+    entryId = FlowRouter.getParam('id')
+    entries = rankings.find({entryId: entryId}).fetch()[0]
+    if entries == undefined
+      return 0;
+    myScore = 0
+    _.each entries.votes, (vote)=>
+      if vote.userId = Meteor.userId()
+        myScore = vote.score
+        return
+
+    myScore
+
 
 Template.single.events
+# show lightbox
   'click .img-thumbnail': (e)->
     imgSrc = $(e.currentTarget).data('full')
     if imgSrc
       sImageBox.open(imgSrc)
-
-
+# add bp to favs
   'click #addFav': ()->
-
     if not Meteor.user()
       sAlert.error('You must be logged in to do that')
       Session.set('redirectAfterLogin', FlowRouter.current().path)
       Template._loginButtons.toggleDropdown()
       return false
-
     userId = Meteor.userId()
     entryId = FlowRouter.getParam('id')
-
     Meteor.call('addToFavs', userId, entryId)
 
+#remove from favs
   'click #removeFav': ()->
     userId = Meteor.userId()
     entryId = FlowRouter.getParam('id')
-
     Meteor.call('removeFav', userId, entryId)
+
+  'click .stars': (event, template)->
+    if not Meteor.user()
+      sAlert.error('You must be logged-in to vote')
+      return null
+    ranking = $(event.target).parents('.stars').data('stars')
+    entryId = FlowRouter.getParam('id')
+
+    Meteor.call('vote', ranking, entryId)
 
 
 Template.single.onRendered ()=>

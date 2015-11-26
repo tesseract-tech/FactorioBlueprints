@@ -38,12 +38,6 @@
     label: "Blueprint String"
     autoform:
       rows: 3
-  rating:
-    type: String
-    optional: true
-    autoform:
-      afFieldInput:
-        type: 'raty'
   requirements:
     type: [requirementsSchema]
     optional: true

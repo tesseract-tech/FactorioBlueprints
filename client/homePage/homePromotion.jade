@@ -1,14 +1,20 @@
 template(name='homePromo')
     if Template.subscriptionsReady
-        // Hero
-        .container
             .jumbotron
-                h1 Create your BluePrint
-                p Help us grow our blueprint database  by adding your creations
-                if loggedIn
-                    a(class='btn btn-primary btn-lrg' href='/create') Create BluePrint
-                else
-                    button( id='showSignUpDropDown' class='btn btn-primary btn-lrg') Create Account
+                .container
+                    h1 Create your BluePrint
+                    .row
+                        .col-lg-8
+                            p Help us grow our blueprint database  by adding your creations
+                            if loggedIn
+                                a(class='btn btn-primary btn-lrg' href='/create') Create BluePrint
+                            else
+                                button( id='showSignUpDropDown' class='btn btn-primary btn-lrg') Create Account
+                        .col-lg-4
+                            p FactorioBlueprints.com is a site to find a share blueprints using the
+                                a(href='http://www.factorioforums.com/forum/viewtopic.php?t=13651') Blueprint string
+                                | mod
+
 
         .container
             h4 Newly Added

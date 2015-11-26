@@ -58,3 +58,6 @@ Meteor.publish 'allPrints', (page, limit)->
   options.limit = pageLimit
 
   bluePrints.find {}, options
+
+Meteor.publish 'entryRating', (entryId)->
+  rankings.find({entryId: entryId})

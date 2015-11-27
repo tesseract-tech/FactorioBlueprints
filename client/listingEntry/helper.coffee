@@ -6,3 +6,12 @@ Template.listingEntry.helpers
 
     newUrl = image.split('upload/')
     newUrl.join('upload/c_fill,g_center,h_260,r_0,w_460/')
+
+  shortTags: ()->
+    newList = []
+    _.each @tags, (tag, index)->
+      if index < 3
+        newList.push(tag)
+      else
+        return;
+    newList

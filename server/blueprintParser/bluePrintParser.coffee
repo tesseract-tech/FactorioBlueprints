@@ -1,8 +1,8 @@
 Meteor.startup ()->
   if process.env.NODE_ENV == 'production'
-    @parserLoc = '/home/parser'
+    @parserLoc = "/home/parser"
   else
-    @parserLoc = '../../../../../private'
+    @parserLoc = "../../../../../private"
 
 
 EntCount = (string, id, callback)=>

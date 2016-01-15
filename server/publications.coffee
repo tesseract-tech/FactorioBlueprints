@@ -4,7 +4,9 @@ Meteor.publish 'singleEntry', (id)->
     userId = blueprint.fetch()[0].user
     user = Meteor.users.find({_id: userId}, {fields: {username: 1, _id: 1, favs: 1}})
   #  return user and blueprints
-  [blueprint, user]
+    [blueprint, user]
+  else
+    null
 
 
 #  Gets newest blue prints
@@ -33,6 +35,17 @@ Meteor.publish 'byUserId', (userId)->
 
   #  return user and blueprints
   [blueprints, user]
+
+#  gets all entries for specific user
+Meteor.publish 'byUsername', (username)->
+  user = Meteor.users.find({'username': username}, {fields: {username: 1, _id: 1, favs: 1}})
+  userId = user.fetch()[0]._id
+  blueprints = bluePrints.find({'user': userId})
+  #  return user and blueprints
+  if blueprints.count() >= 1
+    [blueprints, user]
+  else
+    null
 
 Meteor.publish 'userDetails', (userId)->
   Meteor.users.find({_id: userId}, {fields: {username: 1, _id: 1, favs: 1}})

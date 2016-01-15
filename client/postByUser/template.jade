@@ -1,0 +1,7 @@
+template(name='postByUser')
+  .container
+    .page-header 
+      h1 #{username} has #{bluePrintCount} {{pluralize 'Blueprint' bluePrintCount false}}
+  .container
+    each blueprints
+        +listingEntry

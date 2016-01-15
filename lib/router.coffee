@@ -11,6 +11,17 @@ validateLogin = (context, redirect, doStop)->
     else
       redirect('/')
 
+# This will make sure you cant go to any pages wihtout haveing a username
+checkUserName = (context, redirect, doStop)->
+  if Meteor.user() && !Meteor.user().username?
+    BlazeLayout.render 'layout', {content: 'setUserName'}
+    doStop()
+
+## Global triggers
+
+FlowRouter.triggers.enter([checkUserName])
+FlowRouter.triggers.exit([checkUserName])
+
 
 FlowRouter.route '/',
   action: ()->
@@ -50,6 +61,11 @@ FlowRouter.route '/bluePrints',
   action: ()->
     GAnalytics.pageview()
     BlazeLayout.render 'layout', {content: 'bluePrints'}
+
+FlowRouter.route '/user/:username',
+  triggers: [trackPage]
+  action: (params)->
+    BlazeLayout.render 'layout', {content: 'postByUser'}
 
 
 #404 page

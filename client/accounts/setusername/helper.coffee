@@ -22,5 +22,5 @@ Template.setUserName.events
     Meteor.call 'updateUsername', username, (err)->
       if err
         sAlert.error(err.reason);
-      else
-        FlowRouter.go('/')
+
+      FlowRouter.reload();

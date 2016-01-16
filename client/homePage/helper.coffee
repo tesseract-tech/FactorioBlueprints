@@ -47,5 +47,6 @@ Template.homePage.helpers
 
 
 Template.homePage.events
-  'click #showSignUpDropDown': ()=>
-    Meteor.call 'showLogin'
+  'click #showSignUpDropDown': (e)->
+      e.stopPropagation();
+      Template._loginButtons.toggleDropdown();

@@ -13,6 +13,11 @@ Template.single.onCreated ()->
     self.subscribe('favorites')
 
 
+convertToJpg = (string)->
+  urlparts = string.split('.')
+  urlparts[urlparts.length - 1] = 'jpg'
+  return urlparts.join('.')
+
 Template.single.helpers
   'doc': ()->
     bluePrints.findOne({_id: FlowRouter.getParam('id')})
@@ -39,7 +44,11 @@ Template.single.helpers
 
   'hasFlash': ()->
     hasFlash
-  thumbImg: ()->
+  'convertToJpg': (string)->
+    urlparts = string.split('.')
+    urlparts[1] = 'jpg'
+    return urlparts.join('.')
+  'thumbImg': ()->
     bp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
 
     if not bp
@@ -48,7 +57,19 @@ Template.single.helpers
       image = bp.image
 
     newUrl = image.split('upload/')
+    newUrl[1]= convertToJpg(newUrl[1])
     newUrl.join('upload/c_fill,g_center,h_260,r_0,w_460/')
+
+  'fullSize': ()->
+    bp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
+
+    if not bp
+      return ''
+    else
+      image = bp.image
+
+    return convertToJpg(image)
+
 
   'beforeRemove': ()->
     return (collection, id)->

@@ -144,9 +144,15 @@ Template.single.events
       return null
     ranking = $(event.target).parents('.stars').data('stars')
     entryId = FlowRouter.getParam('id')
-
     Meteor.call('vote', ranking, entryId)
 
+  # Track bps copied to clipbard
+  'click #bluePrintBtn': ()->
+    GAnalytics.event("bluePrintBtn","copy_to_clip_board");
+
+  #track bp strings that are viewed
+  'click #viewString': ()->
+    GAnalytics.event("bluePrintBtn","view_blueprint_string");
 
 Template.single.onRendered ()=>
   if hasFlash

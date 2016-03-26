@@ -58,7 +58,7 @@ Template.single.helpers
 
     newUrl = image.split('upload/')
     newUrl[1]= convertToJpg(newUrl[1])
-    newUrl.join('upload/c_fill,g_center,h_260,r_0,w_460/')
+    newUrl.join('upload/c_fill,g_center,h_260,r_0,w_460,q_60/')
 
   'fullSize': ()->
     bp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
@@ -67,8 +67,13 @@ Template.single.helpers
       return ''
     else
       image = bp.image
+      maxWidth = window.innerWidth * .80
+      maxHeight = window.innerHeight * .80
 
-    return convertToJpg(image)
+    newUrl = image.split('upload/')
+    newUrl[1]= convertToJpg(newUrl[1])
+    newUrl.join("upload/c_limit,g_center,h_#{maxHeight},r_0,w_#{maxWidth}/")
+
 
 
   'beforeRemove': ()->

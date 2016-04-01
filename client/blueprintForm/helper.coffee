@@ -1,3 +1,9 @@
+zlib = require('zlib');
+pako = require('pako');
+parser = require('luaparse');
+
+maxFileSize = 1048576 * 2  # 2 megs
+
 Template.bluePrintForm.onCreated ()->
   self = @
   self.autorun ()->
@@ -12,6 +18,90 @@ Template.bluePrintForm.helpers
       'insert'
     else
       'update'
+
+Template.bluePrintForm.events
+  'change #bpFile': (event)->
+    reader = new FileReader();
+    reader.onload = (e)->
+
+      file = event.target.files[0];
+
+      if file.size > maxFileSize || file.fileSize > maxFileSize
+        sAlert.error("File is too large")
+        return
+
+      data = e.target.result
+      data = data.replace("data:text/plain;base64,","");
+      # if this fails the string is not properly formatted
+      try
+        compressedData = window.atob(window.atob(data))
+      catch error
+        sAlert.error('Inproper file type. Please confirm you are using a proper blueprint file')
+        @value = null
+        return
+
+      data = pako.ungzip(compressedData)
+      string = ''
+
+      i = 0
+      while(i < data.length)
+        string += String.fromCharCode(data[i])
+        i++
+
+      rawData = parser.parse(string)
+      # only get the data that we care about for this parser
+      fields = rawData['body'][0]['body'][0]['init'][0]['fields']
+
+      #get our blueprint data
+      entitiesRaw = fields[0].value.fields
+      entitiesRawLength = entitiesRaw.length - 1
+      iconRaw = fields[1].value.fields
+
+      # new arrays for data to be injected into
+      entities = new Array
+      icons = new Array
+
+      i = 0 # main iterator
+      while(i <= entitiesRawLength) #loop over each field group
+
+        entitiesfields = entitiesRaw[i].value.fields
+        newEntity = new Object()
+        fi = 0 # field iterator
+        while(fi < entitiesfields.length) #loop over each field subgroup
+          # add new entity name
+          fieldName = entitiesfields[fi].key.name
+          if(fieldName == "name")
+            newEntity.name = entitiesfields[fi].value.value
+            # continue
+            #end name creation
+          if(fieldName == "direction")
+            newEntity.direction = entitiesfields[fi].value.raw
+          # add position to entity
+          if(fieldName == "position")
+            positionArray = new Array
+            positionData = entitiesfields[fi].value.fields
+            pi = 0 # position iterator
+            while(pi <= positionData.length - 1)
+              position = new Object()
+              if( not positionData[pi].value.argument )
+                position[positionData[pi].key.name] = parseInt(positionData[pi].value.raw,10)
+              else
+                position[positionData[pi].key.name] = parseInt('-'+positionData[pi].value.argument.raw,10)
+              positionArray.push(position)
+              pi++
+              newEntity.position = positionArray
+            #end position creation
+
+          fi++
+          # end field iterator
+          entities.push(newEntity)
+        i++
+
+      console.log JSON.stringify(entities)
+      return
+
+    reader.readAsDataURL(event.target.files[0])
+
 
 
 convertDataURIToBinary = (dataURI) ->

@@ -1,2 +1,2 @@
-pako = require('pako');
-luaparse = require('luaparse');
+// pako = require('pako');
+// luaparse = require('luaparse');

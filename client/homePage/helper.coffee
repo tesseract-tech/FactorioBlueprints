@@ -21,7 +21,6 @@ Template.homePromo.helpers
     )
 
   'loggedIn': ()->
-    console.log 'fire'
     if Meteor.userId()
       true
     else
@@ -48,6 +47,6 @@ Template.homePage.helpers
 
 
 Template.homePage.events
-  'click #showSignUpDropDown': ()=>
-#    $('.dropdown-toggle').dropdown('toggle')
-    Meteor.call 'showLogin'
+  'click #showSignUpDropDown': (e)->
+      e.stopPropagation();
+      Template._loginButtons.toggleDropdown();

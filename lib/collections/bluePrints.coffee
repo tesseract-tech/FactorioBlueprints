@@ -21,6 +21,8 @@
     max: 200
   description:
     type: String
+    min: 150
+    max: 5000
     autoform:
       type: 'markdown'
   tags:
@@ -30,6 +32,7 @@
       type: 'tagsTypeahead'
   image:
     type: String
+    optional:true
     autoform:
       afFieldInput:
         type: 'cloudinary'
@@ -37,7 +40,7 @@
     type: String
     label: "Blueprint String"
     autoform:
-      rows: 3
+      type: 'hidden'
   requirements:
     type: [requirementsSchema]
     optional: true

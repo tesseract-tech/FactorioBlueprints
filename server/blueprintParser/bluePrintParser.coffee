@@ -1,15 +1,18 @@
 Meteor.startup ()->
   if process.env.NODE_ENV == 'production'
-    @parserLoc = '/home/parser'
+    @parserLoc = "/home/parser"
   else
-    @parserLoc = '../../../../../private'
+    @parserLoc = "../../../../../private"
 
 
 EntCount = (string, id, callback)=>
   Meteor.npmRequire('shelljs/global')
-  string = "'#{string}'"
 
-  cmd = "cd #{@parserLoc} && lua parser.lua  #{string}"
+  string  = string.replace(/(\r\n|\n|\r)/gm,"");
+  string = "\"#{string}\""
+
+  cmd = "cd #{@parserLoc} && lua parser.lua #{string}"
+  console.log cmd 
   exec cmd, (code, output)->
     if code != 0
       Meteor.Error "Something is wrong with the blueprint string"

@@ -13,6 +13,15 @@ Template.single.onCreated ()->
     self.subscribe('favorites')
 
 
+convertToJpg = (string)->
+
+  if not string
+    return null
+
+  urlparts = string.split('.')
+  urlparts[urlparts.length - 1] = 'jpg'
+  return urlparts.join('.')
+
 Template.single.helpers
   'doc': ()->
     bluePrints.findOne({_id: FlowRouter.getParam('id')})
@@ -39,16 +48,42 @@ Template.single.helpers
 
   'hasFlash': ()->
     hasFlash
-  thumbImg: ()->
+  'convertToJpg': (string)->
+    if not string
+      return null
+    urlparts = string.split('.')
+    urlparts[1] = 'jpg'
+    return urlparts.join('.')
+  'thumbImg': ()->
     bp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
 
     if not bp
       return ''
     else
       image = bp.image
-
+    if not image
+      return '/images/noimage.jpg'
     newUrl = image.split('upload/')
-    newUrl.join('upload/c_fill,g_center,h_260,r_0,w_460/')
+    newUrl[1]= convertToJpg(newUrl[1])
+    newUrl.join('upload/c_fill,g_center,h_260,r_0,w_460,q_60/')
+
+  'fullSize': ()->
+    bp = bluePrints.findOne({_id: FlowRouter.getParam('id')})
+
+    if not bp
+      return ''
+    else
+      image = bp.image
+      maxWidth = window.innerWidth * .80
+      maxHeight = window.innerHeight * .80
+
+    if not image
+      return '/images/noimage.jpg'
+    newUrl = image.split('upload/')
+    newUrl[1]= convertToJpg(newUrl[1])
+    newUrl.join("upload/c_limit,g_center,h_#{maxHeight},r_0,w_#{maxWidth}/")
+
+
 
   'beforeRemove': ()->
     return (collection, id)->
@@ -118,9 +153,15 @@ Template.single.events
       return null
     ranking = $(event.target).parents('.stars').data('stars')
     entryId = FlowRouter.getParam('id')
-
     Meteor.call('vote', ranking, entryId)
 
+  # Track bps copied to clipbard
+  'click #bluePrintBtn': ()->
+    GAnalytics.event("bluePrintBtn","copy_to_clip_board");
+
+  #track bp strings that are viewed
+  'click #viewString': ()->
+    GAnalytics.event("bluePrintBtn","view_blueprint_string");
 
 Template.single.onRendered ()=>
   if hasFlash

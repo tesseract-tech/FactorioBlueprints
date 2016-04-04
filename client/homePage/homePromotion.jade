@@ -17,9 +17,11 @@ template(name='homePromo')
 
 
         .container
-            h4 Newly Added
-            each newest
-                +listingEntry
-            h4 Most Favorited
-            each mostFav
-                +listingEntry
+            .row
+              h4 Newly Added
+              each newest
+                  +listingEntry
+            .row
+              h4 Most Favorited
+              each mostFav
+                  +listingEntry

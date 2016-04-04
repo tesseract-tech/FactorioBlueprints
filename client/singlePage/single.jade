@@ -14,7 +14,7 @@ template(name='single')
 
         .row
             .col-lg-4
-                img(src=thumbImg  data-full=doc.image class='img-thumbnail')
+                img(src=thumbImg  data-full=fullSize class='img-thumbnail')
                 hr
                 .panel.panel-default
                     .panel-heading Info
@@ -23,7 +23,8 @@ template(name='single')
                             tr
                                 td Author ::
                                 if Template.subscriptionsReady
-                                    td {{user.username}}
+                                    td 
+                                      a(href='/user/{{user.username}}') {{user.username}}
                             tr
                                 td Release Date ::
                                 if Template.subscriptionsReady

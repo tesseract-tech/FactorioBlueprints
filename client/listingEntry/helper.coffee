@@ -1,11 +1,21 @@
+convertToJpg = (string)->
+  urlparts = string.split('.')
+  urlparts[urlparts.length - 1] = 'jpg'
+  return urlparts.join('.')
+
+
 Template.listingEntry.helpers
   'url': ()->
     FlowRouter.path "/view/:id", id: this._id
   image: ()->
     image = @.image
 
+    if not image
+      return '/images/noimage.jpg'
+
     newUrl = image.split('upload/')
-    newUrl.join('upload/c_fill,g_center,h_260,r_0,w_460/')
+    newUrl[1] = convertToJpg(newUrl[1])
+    newUrl.join('upload/c_fill,g_center,h_260,r_0,w_460,q_60/')
 
   shortTags: ()->
     newList = []

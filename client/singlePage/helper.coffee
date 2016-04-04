@@ -14,6 +14,10 @@ Template.single.onCreated ()->
 
 
 convertToJpg = (string)->
+
+  if not string
+    return null
+
   urlparts = string.split('.')
   urlparts[urlparts.length - 1] = 'jpg'
   return urlparts.join('.')
@@ -45,6 +49,8 @@ Template.single.helpers
   'hasFlash': ()->
     hasFlash
   'convertToJpg': (string)->
+    if not string
+      return null
     urlparts = string.split('.')
     urlparts[1] = 'jpg'
     return urlparts.join('.')
@@ -55,7 +61,8 @@ Template.single.helpers
       return ''
     else
       image = bp.image
-
+    if not image
+      return '/images/noimage.jpg'
     newUrl = image.split('upload/')
     newUrl[1]= convertToJpg(newUrl[1])
     newUrl.join('upload/c_fill,g_center,h_260,r_0,w_460,q_60/')
@@ -70,6 +77,8 @@ Template.single.helpers
       maxWidth = window.innerWidth * .80
       maxHeight = window.innerHeight * .80
 
+    if not image
+      return '/images/noimage.jpg'
     newUrl = image.split('upload/')
     newUrl[1]= convertToJpg(newUrl[1])
     newUrl.join("upload/c_limit,g_center,h_#{maxHeight},r_0,w_#{maxWidth}/")

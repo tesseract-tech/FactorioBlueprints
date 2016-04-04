@@ -10,6 +10,9 @@ Template.listingEntry.helpers
   image: ()->
     image = @.image
 
+    if not image
+      return '/images/noimage.jpg'
+
     newUrl = image.split('upload/')
     newUrl[1] = convertToJpg(newUrl[1])
     newUrl.join('upload/c_fill,g_center,h_260,r_0,w_460,q_60/')

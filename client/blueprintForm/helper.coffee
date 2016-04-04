@@ -4,6 +4,8 @@ parser = require('luaparse');
 
 maxFileSize = 1048576 * 2  # 2 megs
 
+Session.setDefault "blueprintString", null
+
 Template.bluePrintForm.onCreated ()->
   self = @
   self.autorun ()->
@@ -18,44 +20,60 @@ Template.bluePrintForm.helpers
       'insert'
     else
       'update'
+  'blueprintStringFromFile': ()->
+    Session.get('blueprintString')
 
 Template.bluePrintForm.events
   'change #bpFile': (event)->
     reader = new FileReader();
     reader.onload = (e)->
-
       file = event.target.files[0];
-
+      # lets make sure the file isnt too large. if it is it will take for ever to parse
       if file.size > maxFileSize || file.fileSize > maxFileSize
         sAlert.error("File is too large")
         return
-
+      #remove some un-neded data
       data = e.target.result
       data = data.replace("data:text/plain;base64,","");
       # if this fails the string is not properly formatted
       try
         compressedData = window.atob(window.atob(data))
+        Session.set "blueprintString", window.atob(data)
       catch error
         sAlert.error('Inproper file type. Please confirm you are using a proper blueprint file')
         @value = null
         return
-
+      # this handles the ungzip/inflation
       data = pako.ungzip(compressedData)
       string = ''
 
+      # convert charcter code to something more useable
       i = 0
       while(i < data.length)
         string += String.fromCharCode(data[i])
         i++
 
-      rawData = parser.parse(string)
+      # parse that useable data with the lua parser
+      # We have to do this becuase lua tables -> json is a pain
+      try
+        rawData = parser.parse(string)
+      catch error
+        sAlert.error('Blueprint is not the correct format')
       # only get the data that we care about for this parser
-      fields = rawData['body'][0]['body'][0]['init'][0]['fields']
+      try
+        fields = rawData['body'][0]['body'][0]['init'][0]['fields']
+      catch error
+          sAlert.error('BluePrint is not the correct format.')
+          return null
 
       #get our blueprint data
-      entitiesRaw = fields[0].value.fields
-      entitiesRawLength = entitiesRaw.length - 1
-      iconRaw = fields[1].value.fields
+      try
+        entitiesRaw = fields[0].value.fields
+        entitiesRawLength = entitiesRaw.length - 1
+        iconRaw = fields[1].value.fields
+      catch error
+        sAlert.error('Blueprint is not the correct format.')
+        return null
 
       # new arrays for data to be injected into
       entities = new Array
@@ -91,13 +109,31 @@ Template.bluePrintForm.events
               pi++
               newEntity.position = positionArray
             #end position creation
-
           fi++
           # end field iterator
           entities.push(newEntity)
         i++
 
-      console.log JSON.stringify(entities)
+      #  our prased data
+      entitiesString  = JSON.stringify(entities)
+
+      # now lets get our entity counts
+      tempStorage = new Object
+      _.each entities, (ent)->
+        if not tempStorage[ent.name]
+          tempStorage[ent.name] = 1
+        else
+          tempStorage[ent.name] = tempStorage[ent.name] + 1
+
+      #  lets build our count
+      requirements = []
+      _.each tempStorage, (value, key)->
+        data = new Object
+        data.item = key
+        data.amount = value
+        requirements.push(data)
+
+      Session.set "BlueprintRequirments", requirements
       return
 
     reader.readAsDataURL(event.target.files[0])
@@ -138,7 +174,6 @@ hook =
       doc.$set.string = string
       doc.$set.lastUpdate = moment().format()
       try
-        parseBluePrint(string)
         Session.set 'string', string
       catch error
         sAlert.error(error.message)
@@ -146,8 +181,8 @@ hook =
 
       doc
     'insert': (doc)->
-      if doc.string?
-        string = doc.string.trim()
+      if Session.get "blueprintString"
+        string = Session.get "blueprintString"
       else
         sAlert.error('A blueprint string is required.')
         return false;
@@ -156,6 +191,7 @@ hook =
       doc.pubDate = moment().format()
       doc.lastUpdate = moment().format()
       doc.user = Meteor.userId()
+      doc.requirements = Session.get "BlueprintRequirments"
       try
         parseBluePrint(doc.string)
         Session.set 'string', string
@@ -164,14 +200,13 @@ hook =
         return false
       doc
   onSuccess: (formType, result)->
+    GAnalytics.event("blueprint", "created")
     if formType == 'update'
       id = FlowRouter.getParam('id')
     else
       id = result
-    Meteor.call 'bluePrintParser', Session.get('string'), id
-    FlowRouter.go('/view/' + id)
 
-    GAnalytics.event("blueprint", "created")
+    FlowRouter.go('/view/' + id)
 
   onError: (formType, error)->
     sAlert.error(error.message)

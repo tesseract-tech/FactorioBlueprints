@@ -1,6 +1,5 @@
 .meteor/local
 .meteor/meteorite
-node_modules/
 .idea/
 .idea/jsLibraryMappings.xml
 .idea/watcherTasks.xml

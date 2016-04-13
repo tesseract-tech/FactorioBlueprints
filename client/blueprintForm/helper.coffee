@@ -1,4 +1,4 @@
-zlib = require('zlib');
+
 pako = require('pako');
 parser = require('luaparse');
 

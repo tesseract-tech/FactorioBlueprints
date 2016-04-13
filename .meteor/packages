@@ -51,15 +51,11 @@ jparker:crypto-base64
 meteorhacks:npm
 
 
-gb96:zlib
-ostrio:base64
-cosmos:browserify
 meteorhacks:async
 tmeasday:publish-counts
 barbatus:stars-rating
 
 
-npm-container
 accounts-twitter
 scholtzm:accounts-steam
 service-configuration

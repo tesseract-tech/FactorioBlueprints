@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/tesseract-tech/factorioBlueprints.png?label=ready&title=Ready)](https://waffle.io/tesseract-tech/factorioBlueprints)
 # blueprint.builder
 Website for Factorio users to share blueprints
 
